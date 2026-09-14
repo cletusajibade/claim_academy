@@ -5,5 +5,6 @@ public class Main {
         System.out.println("My name is " + name);
         System.out.println("I am learning Java.");
         // TODO: Print one learning goal.
+        System.out.println("I love Java web development. ");
     }
 }
