@@ -3,6 +3,9 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 .kotlin
+out/
+build/
+*.class
 
 ### IntelliJ IDEA ###
 .idea/
@@ -34,3 +37,8 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+# Environment variables
+.env
+.env.*
+!.env.example
