@@ -2,6 +2,9 @@ public class Main {
     static void main(String[] args) {
         BankAccount reggie = new BankAccount("Reggie");
         BankAccount jules = new BankAccount("Jules");
+        BankAccount james = new BankAccount("James");
+
+        BankAccount eddy = null;
 
         // Get current balance
         IO.println("Reggie's current balance= " + reggie.getBalanceCents());

@@ -4,8 +4,8 @@ public class BankAccount {
 
     // Constructor
     // The parameter 'owner' is different from the class field 'owner'
-    public BankAccount(String owner) {
-        this.owner = owner;
+    public BankAccount(String newOwner) {
+        this.owner = newOwner;
         this.balanceCents = 0;
     }
 
