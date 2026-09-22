@@ -3,8 +3,8 @@ package inheritance.sealed;
 public final class Tricycle extends Vehicle{
     public String name;
 
-    public Tricycle(String NewName){
-        this.name = NewName;
+    public Tricycle(String name){
+        this.name = name;
     }
 
     public String getName() {

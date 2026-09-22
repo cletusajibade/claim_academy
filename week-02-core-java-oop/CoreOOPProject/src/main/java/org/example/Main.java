@@ -1,7 +1,9 @@
 package org.example;
 
+import inheritance.Cat;
 import inheritance.Dog;
 import inheritance.interfaces.Bird;
+import inheritance.interfaces.Flyable;
 import inheritance.sealed.Bicycle;
 import inheritance.sealed.Tricycle;
 
@@ -14,11 +16,11 @@ public class Main {
         IO.println("Person Age: " + person.age());
 
         Rectangle rectangle = new Rectangle(4.6, 7.8);
-        IO.println("\nArea of the rectangle = "+ rectangle.area());
-        IO.println("Perimeter of the rectangle = "+ rectangle.perimeter());
+        IO.println("\nArea of the rectangle = " + rectangle.area());
+        IO.println("Perimeter of the rectangle = " + rectangle.perimeter());
 
-        IO.println("Width ="+ rectangle.width());
-        IO.println("Height ="+ rectangle.height());
+        IO.println("Width =" + rectangle.width());
+        IO.println("Height =" + rectangle.height());
 
         Animal animal = new Animal();
 
@@ -43,18 +45,35 @@ public class Main {
         d.walk(20);
 
         Bird bird = new Bird();
-        bird.walk(30);
         bird.fly();
+        bird.walk(30);
         bird.eat();
+        bird.run();
+        bird.stop();
 
         IO.println();
 
         Bicycle bicycle = new Bicycle("Bicycle");
-        IO.print(bicycle.getName()+" ");
+        IO.print(bicycle.getName() + " ");
         bicycle.wheels(2);
 
         Tricycle tricycle = new Tricycle("Tricycle");
-        IO.print(tricycle.getName()+" ");
+        IO.print(tricycle.getName() + " ");
         tricycle.wheels(3);
+
+        IO.println();
+
+        Cat cat = new Cat();
+        cat.scratches();
+        cat.eat();
+        cat.walk(2);
+
+        Flyable flyable = new Flyable() {
+            @Override
+            public void fly() {
+                IO.println("Flying - from anonymous class");
+            }
+        };
+        flyable.fly();
     }
 }
