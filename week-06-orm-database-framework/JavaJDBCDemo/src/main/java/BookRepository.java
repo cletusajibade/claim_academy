@@ -25,18 +25,21 @@ public class BookRepository {
                 "FROM books WHERE book_id=?";
 
         // Create the connection to the database server
-        try {
-            Connection pto = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            PreparedStatement ps = pto.prepareStatement(sql);
+        try (
+                //Using try-with-resources, so no need to manually close the resources in a 'finally' block
+                Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+
 
             ps.setLong(1, book_id);
 
             ResultSet resultSet = ps.executeQuery();
 
-            // Get and set the column values on the book model
+            // Set the column values on the book model
             if (resultSet.next()) {
 
-                Book book = new Book();
+                Book book = new Book(); // Give me an instance of Book
                 book.setBookId(resultSet.getLong("book_id"));
                 book.setTitle(resultSet.getString("title"));
                 book.setAuthor(resultSet.getString("author"));
@@ -48,9 +51,12 @@ public class BookRepository {
                 return book;
             }
 
-        } catch (Exception ex) {
-            IO.println(ex.toString());
         }
+
+        return null;
+    }
+
+    public Book findByAuthor(String authhor){
         return null;
     }
 
@@ -58,7 +64,7 @@ public class BookRepository {
         BookRepository repository = new BookRepository();
 
         try {
-            Book book = repository.findById(4);
+            Book book = repository.findById(10);
             if (book != null) {
                 IO.println(book);
             } else {
