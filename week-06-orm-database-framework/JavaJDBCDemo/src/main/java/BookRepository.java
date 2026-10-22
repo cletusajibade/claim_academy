@@ -1,4 +1,8 @@
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 //JDBC - Java Database Connectivity
 //Demonstrating JDBC in java
@@ -56,7 +60,7 @@ public class BookRepository {
         return null;
     }
 
-    public Book findByAuthor(String authhor){
+    public Book findByAuthor(String authhor) {
         return null;
     }
 
