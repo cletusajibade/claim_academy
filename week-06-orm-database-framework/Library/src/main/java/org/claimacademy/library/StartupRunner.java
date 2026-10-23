@@ -6,6 +6,7 @@ import org.claimacademy.library.model.Member;
 import org.claimacademy.library.repository.BookRepository;
 import org.claimacademy.library.repository.LoanRepository;
 import org.claimacademy.library.repository.MemberRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -28,12 +29,20 @@ public class StartupRunner implements CommandLineRunner {
     // 4. Durability: Once a transaction is committed, its changes are permanently stored in the database. It ensures that committed transactions are not lost even in the event of system failures.
     private final TransactionTemplate transactionTemplate;
 
+    // It fetches whatever 'demo.stage' property is
+    private final String demoStage;
+
     //Constructor/Dependency injection
-    public StartupRunner(BookRepository bookRepository, MemberRepository memberRepository, LoanRepository loanRepository, TransactionTemplate transactionTemplate) {
+    public StartupRunner(BookRepository bookRepository,
+                         MemberRepository memberRepository,
+                         LoanRepository loanRepository,
+                         TransactionTemplate transactionTemplate,
+                         @Value("${demo.stage}") String demoStage) {
         this.bookRepository = bookRepository;
         this.memberRepository = memberRepository;
         this.loanRepository = loanRepository;
         this.transactionTemplate = transactionTemplate;
+        this.demoStage = demoStage;
     }
 
     @Override
