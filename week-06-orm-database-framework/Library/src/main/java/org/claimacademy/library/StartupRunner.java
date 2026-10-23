@@ -11,6 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Component
@@ -33,6 +34,11 @@ public class StartupRunner implements CommandLineRunner {
 
     private static final String EMAIL = "johndoe@email.com";
     private static final String BOOK_TITLE = "Elements of Programming in Java";
+    private static final String AUTHOR = "Randolf Wolf";
+    private static final int PUB_YEAR = 1967;
+    private static final String GENRE = "Technology";
+    private static final BigDecimal PRICE = new BigDecimal("28.99");
+    private static final int COPIES = 10;
 
     //Constructor/Dependency injection
     public StartupRunner(BookRepository bookRepository,
@@ -53,7 +59,9 @@ public class StartupRunner implements CommandLineRunner {
             return;
         }
 
-        seedLoans();
+        //seedLoans();
+
+        runOperations();
     }
 
     private void seedLoans() {
@@ -73,21 +81,42 @@ public class StartupRunner implements CommandLineRunner {
         //memberRepository.save(reggie); //saves one entity
     }
 
-    private void createOperation(){
-        if(memberRepository.findByEmail(EMAIL)){
-
+    public void runOperations(){
+        switch (demoStage){
+            case "create" -> createOperation();
+            case "read" -> readOperation();
+            case "update" -> updateOperation();
+            case "delete" -> deleteOperation();
+            case "none" -> {}
+            default -> IO.println("Unknown demo.stage '"+demoStage+"'(use none, create, read, update or delete)");
         }
     }
 
-    private void readOperation(){
+    private void createOperation() {
+        if (memberRepository.findByEmail(EMAIL).isPresent()) {
+            IO.println("Member already in the database; run delete first");
+            return;
+        }
+
+        transactionTemplate.executeWithoutResult(status -> {
+            Member member = new Member("James Gosling", EMAIL);
+            Book book = new Book(BOOK_TITLE, AUTHOR, PUB_YEAR, GENRE, PRICE, COPIES);
+            bookRepository.save(book);
+
+            member.addLoan(new Loan(book, member));
+            memberRepository.save(member);
+        });
+    }
+
+    private void readOperation() {
 
     }
 
-    private void updateOperation(){
+    private void updateOperation() {
 
     }
 
-    private void deleteOperation(){
+    private void deleteOperation() {
 
     }
 }
