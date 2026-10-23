@@ -32,9 +32,9 @@ public class StartupRunner implements CommandLineRunner {
     // It fetches whatever 'demo.stage' property is
     private final String demoStage;
 
-    private static final String EMAIL = "johndoe@email.com";
+    private static final String EMAIL = "zigzigler@email.com";
     private static final String BOOK_TITLE = "Elements of Programming in Java";
-    private static final String AUTHOR = "Randolf Wolf";
+    private static final String AUTHOR = "Zig Zigler";
     private static final int PUB_YEAR = 1967;
     private static final String GENRE = "Technology";
     private static final BigDecimal PRICE = new BigDecimal("28.99");
@@ -60,7 +60,6 @@ public class StartupRunner implements CommandLineRunner {
         }
 
         //seedLoans();
-
         runOperations();
     }
 
@@ -106,6 +105,11 @@ public class StartupRunner implements CommandLineRunner {
             member.addLoan(new Loan(book, member));
             memberRepository.save(member);
         });
+
+        if(!demoStage.equals("none")){
+            IO.println("Table rows after '"+demoStage+ "' stage");
+            printOperations();
+        }
     }
 
     private void readOperation() {
@@ -118,5 +122,20 @@ public class StartupRunner implements CommandLineRunner {
 
     private void deleteOperation() {
 
+    }
+
+    private void printOperations(){
+        transactionTemplate.executeWithoutResult(status->{
+            memberRepository.findAll().forEach(m->{
+                IO.println(m.getName() +" has " + m.getLoans().size() + " loan(s)");
+                m.getLoans().forEach(l->IO.println("   borrowed "+ l.getBook().getTitle()));
+            });
+
+            bookRepository.findAll().forEach(b->{
+                if (!b.getLoans().isEmpty()){
+                    IO.println(b.getTitle()+" borrowed by: "+ b.getLoans().stream().map(l->l.getMember().getName()).toList());
+                }
+            });
+        });
     }
 }
