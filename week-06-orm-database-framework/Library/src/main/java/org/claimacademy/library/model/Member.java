@@ -3,6 +3,7 @@ package org.claimacademy.library.model;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,6 +31,7 @@ public class Member {
     @Column(name = "join_date", nullable = false)
     private LocalDate joinDate = LocalDate.now();
 
+    // OneToMany defaults to lazy fetching
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Loan> loans = new ArrayList<>();
 
@@ -39,12 +41,18 @@ public class Member {
 
     public Member(String name, String email) {
         this.name = name;
-        this.email=email;
+        this.email = email;
     }
 
-    public void addLoan(Loan loan){
-        loans.add(loan);
+    // Bidirectional association or relational helper
+    public void addLoan(Loan loan) {
+        loans.add(loan); //The list of loans is updated to include the new loan.
         loan.setMember(this);
+    }
+
+    public void removeLoan(Loan loan) {
+        loans.remove(loan);
+        loan.setMember(null);
     }
 
     public Integer getId() {
@@ -84,13 +92,7 @@ public class Member {
     }
 
     @Override
-    public String toString(){
-        return "Member{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", joinDate=" + joinDate +
-                ", loans=" + loans +
-                '}';
+    public String toString() {
+        return "Member{" + "id=" + id + ", name='" + name + '\'' + ", email='" + email + '\'' + ", joinDate=" + joinDate + '}';
     }
 }

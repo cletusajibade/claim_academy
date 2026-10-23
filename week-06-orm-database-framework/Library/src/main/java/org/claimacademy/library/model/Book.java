@@ -1,13 +1,17 @@
 package org.claimacademy.library.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "books") // By default, the table name takes the lowercase class name
@@ -34,6 +38,10 @@ public class Book {
 
     @Column(nullable = false)
     private int copies = 1;
+
+    // OneToMany defaults to lazy fetching
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Loan> loans = new ArrayList<>();
 
     public Book() {
         // Used by the framework
@@ -98,6 +106,14 @@ public class Book {
 
     public void setCopies(int copies) {
         this.copies = copies;
+    }
+
+    public List<Loan> getLoans() {
+        return loans;
+    }
+
+    public void setLoans(List<Loan> loans) {
+        this.loans = loans;
     }
 
     @Override

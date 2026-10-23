@@ -82,10 +82,12 @@ public class Loan {
 
     @Override
     public String toString() {
+        // To avoid StackOverflowError, keep relationship fields out of toString();
+        // Loan prints only the book and member ids.
         return "Loan{" +
                 "id=" + id +
-                ", book=" + book +
-                ", member=" + member +
+                ", bookId=" + (book != null ? book.getId() : null) +
+                ", memberId=" + (member != null ? member.getId() : null) +
                 ", loanDate=" + loanDate +
                 ", returnDate=" + returnDate +
                 '}';
