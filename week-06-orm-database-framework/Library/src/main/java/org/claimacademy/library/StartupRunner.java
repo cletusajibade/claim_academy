@@ -11,7 +11,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Component
@@ -32,6 +31,9 @@ public class StartupRunner implements CommandLineRunner {
     // It fetches whatever 'demo.stage' property is
     private final String demoStage;
 
+    private static final String EMAIL = "johndoe@email.com";
+    private static final String BOOK_TITLE = "Elements of Programming in Java";
+
     //Constructor/Dependency injection
     public StartupRunner(BookRepository bookRepository,
                          MemberRepository memberRepository,
@@ -47,41 +49,11 @@ public class StartupRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // CRUD
-        IO.println("Books count:" + bookRepository.count());
-        if (bookRepository.count() == 0) {
-            bookRepository.save(new Book("Programming Java", "John Doe", 1956, "Technology", new BigDecimal("19.99"), 15));
-            bookRepository.save(new Book("Java for Beginners", "Jane Smith", 2022, "Technology", new BigDecimal("24.99"), 10));
-            bookRepository.save(new Book("Advanced Java", "Alice Johnson", 2018, "Technology", new BigDecimal("39.99"), 5));
-            bookRepository.save(new Book("Python Programming", "Mark Brown", 2018, "Programming", new BigDecimal("29.99"), 8));
+        if (demoStage.equals("none")) {
+            return;
         }
 
-        IO.println("Books size in the database:  " + bookRepository.count());
-        //bookRepository.findAll().forEach(book -> IO.println(book));
-
-        //IO.println("Books by Alice Johnson: ");
-        //bookRepository.findByAuthor("Alice Johnson").forEach(book -> IO.println(book));
-
-        //IO.println("findByAuthorContaining: ");
-        //bookRepository.findByAuthorContaining("Johnson").forEach(book -> IO.println(book));
-
-        //IO.println("findByTitle:");
-        //IO.println(bookRepository.findByTitle("Python Programming"));
-        //IO.println("findByPublicationYear:");
-        //IO.println(bookRepository.findByPublicationYear(2018));
-
-        transactionTemplate.executeWithoutResult(status -> {
-            // memberRepository.findById(1).ifPresent(Member::getLoans);
-            // SELECT * FROM member WHERE id = 1;
-            Member member = memberRepository.findById(1).orElse(null);
-            if (member != null) {
-                // IO.println(member.getLoans());
-                // lambda expression
-                member.getLoans().forEach(loan -> IO.println(member.getName() + " has loan: " + loan));
-            }
-        });
-
-        //seedLoans();
+        seedLoans();
     }
 
     private void seedLoans() {
@@ -99,5 +71,23 @@ public class StartupRunner implements CommandLineRunner {
 
         //memberRepository.save(starlet); //saves one entity
         //memberRepository.save(reggie); //saves one entity
+    }
+
+    private void createOperation(){
+        if(memberRepository.findByEmail(EMAIL)){
+
+        }
+    }
+
+    private void readOperation(){
+
+    }
+
+    private void updateOperation(){
+
+    }
+
+    private void deleteOperation(){
+
     }
 }
