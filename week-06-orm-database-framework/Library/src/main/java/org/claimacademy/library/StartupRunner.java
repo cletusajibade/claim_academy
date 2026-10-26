@@ -47,7 +47,15 @@ public class StartupRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // CRUD
+
+        //seedLoans();
+        //createDemo();
+        //deleteDemo();
+
+        jpql();
+    }
+
+    public void createDemo() {
         IO.println("Books count:" + bookRepository.count());
         if (bookRepository.count() == 0) {
             bookRepository.save(new Book("Programming Java", "John Doe", 1956, "Technology", new BigDecimal("19.99"), 15));
@@ -55,33 +63,6 @@ public class StartupRunner implements CommandLineRunner {
             bookRepository.save(new Book("Advanced Java", "Alice Johnson", 2018, "Technology", new BigDecimal("39.99"), 5));
             bookRepository.save(new Book("Python Programming", "Mark Brown", 2018, "Programming", new BigDecimal("29.99"), 8));
         }
-
-        IO.println("Books size in the database:  " + bookRepository.count());
-        bookRepository.findAll().forEach(book -> IO.println(book));
-
-        //IO.println("Books by Alice Johnson: ");
-        //bookRepository.findByAuthor("Alice Johnson").forEach(book -> IO.println(book));
-
-        //IO.println("findByAuthorContaining: ");
-        //bookRepository.findByAuthorContaining("Johnson").forEach(book -> IO.println(book));
-
-        //IO.println("findByTitle:");
-        //IO.println(bookRepository.findByTitle("Python Programming"));
-        //IO.println("findByPublicationYear:");
-        //IO.println(bookRepository.findByPublicationYear(2018));
-
-        transactionTemplate.executeWithoutResult(status -> {
-            // memberRepository.findById(1).ifPresent(Member::getLoans);
-            // SELECT * FROM member WHERE id = 1;
-            Member member = memberRepository.findById(1).orElse(null);
-            if (member != null) {
-                // IO.println(member.getLoans());
-                // lambda expression
-                member.getLoans().forEach(loan -> IO.println(member.getName() + " has loan: " + loan));
-            }
-        });
-
-        //seedLoans();
     }
 
     private void seedLoans() {
@@ -99,5 +80,54 @@ public class StartupRunner implements CommandLineRunner {
 
         //memberRepository.save(starlet); //saves one entity
         //memberRepository.save(reggie); //saves one entity
+    }
+
+    public void jpql() {
+        List<Book> books = bookRepository.search("programming");
+        books.forEach(book -> IO.println(book));
+    }
+
+    public void updateDemo() {
+        Book book = bookRepository.findById(11).orElse(null);
+        if (book != null) {
+            book.setAuthor("James Alexis");
+            book.setTitle("Programming in Python");
+            book.setGenre("Technology");
+            bookRepository.save(book);
+        }
+
+    }
+
+    public void transactionDemo() {
+        transactionTemplate.executeWithoutResult(status -> {
+            // memberRepository.findById(1).ifPresent(Member::getLoans);
+            // SELECT * FROM member WHERE id = 1;
+            Member member = memberRepository.findById(1).orElse(null);
+            if (member != null) {
+                // IO.println(member.getLoans());
+                // lambda expression
+                member.getLoans().forEach(loan -> IO.println(member.getName() + " has loan: " + loan));
+            }
+        });
+    }
+
+    public void findDemo() {
+        IO.println("Books size in the database:  " + bookRepository.count());
+        bookRepository.findAll().forEach(book -> IO.println(book));
+
+        IO.println("Books by Alice Johnson: ");
+        bookRepository.findByAuthor("Alice Johnson").forEach(book -> IO.println(book));
+
+        IO.println("findByAuthorContaining: ");
+        bookRepository.findByAuthorContaining("Johnson").forEach(book -> IO.println(book));
+
+        IO.println("findByTitle:");
+        IO.println(bookRepository.findByTitle("Python Programming"));
+        IO.println("findByPublicationYear:");
+        IO.println(bookRepository.findByPublicationYear(2018));
+    }
+
+    public void deleteDemo() {
+        bookRepository.deleteById(11);
     }
 }
