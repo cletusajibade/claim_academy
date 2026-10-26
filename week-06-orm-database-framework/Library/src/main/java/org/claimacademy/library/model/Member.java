@@ -50,6 +50,7 @@ public class Member {
         loan.setMember(this);
     }
 
+    // Bidirectional association or relational helper
     public void removeLoan(Loan loan) {
         loans.remove(loan);
         loan.setMember(null);
