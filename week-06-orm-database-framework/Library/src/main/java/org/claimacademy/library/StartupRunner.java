@@ -57,7 +57,7 @@ public class StartupRunner implements CommandLineRunner {
         }
 
         IO.println("Books size in the database:  " + bookRepository.count());
-        //bookRepository.findAll().forEach(book -> IO.println(book));
+        bookRepository.findAll().forEach(book -> IO.println(book));
 
         //IO.println("Books by Alice Johnson: ");
         //bookRepository.findByAuthor("Alice Johnson").forEach(book -> IO.println(book));
