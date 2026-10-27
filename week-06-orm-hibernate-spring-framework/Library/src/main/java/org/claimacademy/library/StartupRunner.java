@@ -17,7 +17,6 @@ import java.util.List;
 
 @Component
 public class StartupRunner implements CommandLineRunner {
-
     private final BookRepository bookRepository;
     private final MemberRepository memberRepository;
     private final LoanRepository loanRepository;
@@ -29,6 +28,8 @@ public class StartupRunner implements CommandLineRunner {
     // 3. Isolation: Transactions are isolated from each other, ensuring that concurrent transactions do not interfere with each other. It prevents dirty reads, non-repeatable reads, and phantom reads.
     // 4. Durability: Once a transaction is committed, its changes are permanently stored in the database. It ensures that committed transactions are not lost even in the event of system failures.
     private final TransactionTemplate transactionTemplate;
+
+    private final BookCatalog bookCatalog;
 
     // It fetches whatever 'demo.stage' property is
     private final String demoStage;
@@ -46,12 +47,15 @@ public class StartupRunner implements CommandLineRunner {
                          MemberRepository memberRepository,
                          LoanRepository loanRepository,
                          TransactionTemplate transactionTemplate,
-                         @Value("${demo.stage}") String demoStage) {
+                         @Value("${demo.stage}") String demoStage,
+                         BookCatalog catalog) {
         this.bookRepository = bookRepository;
         this.memberRepository = memberRepository;
         this.loanRepository = loanRepository;
         this.transactionTemplate = transactionTemplate;
         this.demoStage = demoStage;
+        this.bookCatalog = catalog;
+
     }
 
     @Override
@@ -81,40 +85,52 @@ public class StartupRunner implements CommandLineRunner {
         //memberRepository.save(reggie); //saves one entity
     }
 
-    public void runOperations(){
-        switch (demoStage){
+    public void runOperations() {
+        switch (demoStage) {
             case "create" -> createOperation();
             case "read" -> readOperation();
             case "update" -> updateOperation();
             case "delete" -> deleteOperation();
-            case "none" -> {}
-            default -> IO.println("Unknown demo.stage '"+demoStage+"'(use none, create, read, update or delete)");
+            case "none" -> {
+            }
+            default -> IO.println("Unknown demo.stage '" + demoStage + "'(use none, create, read, update or delete)");
         }
     }
 
     private void createOperation() {
-        if (memberRepository.findByEmail(EMAIL).isPresent()) {
-            IO.println("Member already in the database; run delete first");
-            return;
-        }
+        //CRUD
+        // Data Transfer Object (DTO) - this is just a plain data values carrier
+        Book addedBook = bookCatalog.addBook(new Book("In the beginning", "Jesus", 2000, "Religion", new BigDecimal("50.99"), 3));
+        IO.println("Added book with id " + addedBook.getId());
 
-        transactionTemplate.executeWithoutResult(status -> {
-            Member member = new Member("James Gosling", EMAIL);
-            Book book = new Book(BOOK_TITLE, AUTHOR, PUB_YEAR, GENRE, PRICE, COPIES);
-            bookRepository.save(book);
-
-            member.addLoan(new Loan(book, member));
-            memberRepository.save(member);
-        });
-
-        if(!demoStage.equals("none")){
-            IO.println("Table rows after '"+demoStage+ "' stage");
-            printOperations();
-        }
+//        if (memberRepository.findByEmail(EMAIL).isPresent()) {
+//            IO.println("Member already in the database; run delete first");
+//            return;
+//        }
+//
+//        transactionTemplate.executeWithoutResult(status -> {
+//            Member member = new Member("James Gosling", EMAIL);
+//            Book book = new Book(BOOK_TITLE, AUTHOR, PUB_YEAR, GENRE, PRICE, COPIES);
+//            bookRepository.save(book);
+//
+//            member.addLoan(new Loan(book, member));
+//            memberRepository.save(member);
+//        });
+//
+//        if (!demoStage.equals("none")) {
+//            IO.println("Table rows after '" + demoStage + "' stage");
+//            printOperations();
+//        }
     }
 
     private void readOperation() {
+        // The two lines below are equivalent:
+        // bookCatalog.findAllBooks().forEach(IO::println);
+        // bookCatalog.findAllBooks().forEach(book->IO.println(book));
 
+        // These two lines are doing what either of the above lines does.
+        List<Book> bookList = bookCatalog.findAllBooks();
+        bookList.forEach(book -> IO.println(book));
     }
 
     private void updateOperation() {
@@ -125,16 +141,16 @@ public class StartupRunner implements CommandLineRunner {
 
     }
 
-    private void printOperations(){
-        transactionTemplate.executeWithoutResult(status->{
-            memberRepository.findAll().forEach(m->{
-                IO.println(m.getName() +" has " + m.getLoans().size() + " loan(s)");
-                m.getLoans().forEach(l->IO.println("   borrowed "+ l.getBook().getTitle()));
+    private void printOperations() {
+        transactionTemplate.executeWithoutResult(status -> {
+            memberRepository.findAll().forEach(m -> {
+                IO.println(m.getName() + " has " + m.getLoans().size() + " loan(s)");
+                m.getLoans().forEach(l -> IO.println("   borrowed " + l.getBook().getTitle()));
             });
 
-            bookRepository.findAll().forEach(b->{
-                if (!b.getLoans().isEmpty()){
-                    IO.println(b.getTitle()+" borrowed by: "+ b.getLoans().stream().map(l->l.getMember().getName()).toList());
+            bookRepository.findAll().forEach(b -> {
+                if (!b.getLoans().isEmpty()) {
+                    IO.println(b.getTitle() + " borrowed by: " + b.getLoans().stream().map(l -> l.getMember().getName()).toList());
                 }
             });
         });
