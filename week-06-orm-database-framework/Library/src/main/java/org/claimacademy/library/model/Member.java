@@ -16,7 +16,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "members")
-public class Member {
+public class Member { // table named "member" (i in the database
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
@@ -50,6 +50,7 @@ public class Member {
         loan.setMember(this);
     }
 
+    // Bidirectional association or relational helper
     public void removeLoan(Loan loan) {
         loans.remove(loan);
         loan.setMember(null);

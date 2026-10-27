@@ -32,6 +32,14 @@ public class StartupRunner implements CommandLineRunner {
     // It fetches whatever 'demo.stage' property is
     private final String demoStage;
 
+    private static final String EMAIL = "zigzigler@email.com";
+    private static final String BOOK_TITLE = "Elements of Programming in Java";
+    private static final String AUTHOR = "Zig Zigler";
+    private static final int PUB_YEAR = 1967;
+    private static final String GENRE = "Technology";
+    private static final BigDecimal PRICE = new BigDecimal("28.99");
+    private static final int COPIES = 10;
+
     //Constructor/Dependency injection
     public StartupRunner(BookRepository bookRepository,
                          MemberRepository memberRepository,
@@ -47,22 +55,12 @@ public class StartupRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        if (demoStage.equals("none")) {
+            return;
+        }
 
         //seedLoans();
-        //createDemo();
-        //deleteDemo();
-
-        jpql();
-    }
-
-    public void createDemo() {
-        IO.println("Books count:" + bookRepository.count());
-        if (bookRepository.count() == 0) {
-            bookRepository.save(new Book("Programming Java", "John Doe", 1956, "Technology", new BigDecimal("19.99"), 15));
-            bookRepository.save(new Book("Java for Beginners", "Jane Smith", 2022, "Technology", new BigDecimal("24.99"), 10));
-            bookRepository.save(new Book("Advanced Java", "Alice Johnson", 2018, "Technology", new BigDecimal("39.99"), 5));
-            bookRepository.save(new Book("Python Programming", "Mark Brown", 2018, "Programming", new BigDecimal("29.99"), 8));
-        }
+        runOperations();
     }
 
     private void seedLoans() {
@@ -82,52 +80,62 @@ public class StartupRunner implements CommandLineRunner {
         //memberRepository.save(reggie); //saves one entity
     }
 
-    public void jpql() {
-        List<Book> books = bookRepository.search("programming");
-        books.forEach(book -> IO.println(book));
+    public void runOperations(){
+        switch (demoStage){
+            case "create" -> createOperation();
+            case "read" -> readOperation();
+            case "update" -> updateOperation();
+            case "delete" -> deleteOperation();
+            case "none" -> {}
+            default -> IO.println("Unknown demo.stage '"+demoStage+"'(use none, create, read, update or delete)");
+        }
     }
 
-    public void updateDemo() {
-        Book book = bookRepository.findById(11).orElse(null);
-        if (book != null) {
-            book.setAuthor("James Alexis");
-            book.setTitle("Programming in Python");
-            book.setGenre("Technology");
-            bookRepository.save(book);
+    private void createOperation() {
+        if (memberRepository.findByEmail(EMAIL).isPresent()) {
+            IO.println("Member already in the database; run delete first");
+            return;
         }
 
-    }
-
-    public void transactionDemo() {
         transactionTemplate.executeWithoutResult(status -> {
-            // memberRepository.findById(1).ifPresent(Member::getLoans);
-            // SELECT * FROM member WHERE id = 1;
-            Member member = memberRepository.findById(1).orElse(null);
-            if (member != null) {
-                // IO.println(member.getLoans());
-                // lambda expression
-                member.getLoans().forEach(loan -> IO.println(member.getName() + " has loan: " + loan));
-            }
+            Member member = new Member("James Gosling", EMAIL);
+            Book book = new Book(BOOK_TITLE, AUTHOR, PUB_YEAR, GENRE, PRICE, COPIES);
+            bookRepository.save(book);
+
+            member.addLoan(new Loan(book, member));
+            memberRepository.save(member);
         });
+
+        if(!demoStage.equals("none")){
+            IO.println("Table rows after '"+demoStage+ "' stage");
+            printOperations();
+        }
     }
 
-    public void findDemo() {
-        IO.println("Books size in the database:  " + bookRepository.count());
-        bookRepository.findAll().forEach(book -> IO.println(book));
+    private void readOperation() {
 
-        IO.println("Books by Alice Johnson: ");
-        bookRepository.findByAuthor("Alice Johnson").forEach(book -> IO.println(book));
-
-        IO.println("findByAuthorContaining: ");
-        bookRepository.findByAuthorContaining("Johnson").forEach(book -> IO.println(book));
-
-        IO.println("findByTitle:");
-        IO.println(bookRepository.findByTitle("Python Programming"));
-        IO.println("findByPublicationYear:");
-        IO.println(bookRepository.findByPublicationYear(2018));
     }
 
-    public void deleteDemo() {
-        bookRepository.deleteById(11);
+    private void updateOperation() {
+
+    }
+
+    private void deleteOperation() {
+
+    }
+
+    private void printOperations(){
+        transactionTemplate.executeWithoutResult(status->{
+            memberRepository.findAll().forEach(m->{
+                IO.println(m.getName() +" has " + m.getLoans().size() + " loan(s)");
+                m.getLoans().forEach(l->IO.println("   borrowed "+ l.getBook().getTitle()));
+            });
+
+            bookRepository.findAll().forEach(b->{
+                if (!b.getLoans().isEmpty()){
+                    IO.println(b.getTitle()+" borrowed by: "+ b.getLoans().stream().map(l->l.getMember().getName()).toList());
+                }
+            });
+        });
     }
 }
