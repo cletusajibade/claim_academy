@@ -1,5 +1,6 @@
 package org.claimacademy.library;
 
+import org.claimacademy.library.data.BookCatalog;
 import org.claimacademy.library.model.Book;
 import org.claimacademy.library.model.Loan;
 import org.claimacademy.library.model.Member;
