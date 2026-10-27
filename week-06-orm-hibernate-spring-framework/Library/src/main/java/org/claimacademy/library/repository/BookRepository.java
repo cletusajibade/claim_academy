@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BookRepository extends JpaRepository<Book, Integer> {
+    List<Book> findByIsbn(String author);
     List<Book> findByAuthor(String author);
     boolean existsByAuthor(String author);
+    boolean existsByIsbn(String author);
     List<Book> findByTitleContainingIgnoreCase(String fragment);
     List<Book> findByPublicationYearBetween(int from, int to);
     Book findByTitle(String title);

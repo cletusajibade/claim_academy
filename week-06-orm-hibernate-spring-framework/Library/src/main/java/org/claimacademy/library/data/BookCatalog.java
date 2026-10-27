@@ -24,8 +24,10 @@ public class BookCatalog {
     }
 
     public Book addBook(Book book) {
-        if (bookRepository.existsByAuthor(book.getAuthor())) {
-            throw new DuplicateBookException(book.getId());
+        if (bookRepository.existsByIsbn(book.getAuthor())) {
+            if (book.getId() != null) {
+                throw new DuplicateBookException(book.getIsbn());
+            }
         }
         return bookRepository.save(book); // return the result to the caller after saving the book in the database.
     }

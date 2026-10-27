@@ -43,17 +43,21 @@ public class Book {
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Loan> loans = new ArrayList<>();
 
+    @Column(unique = true, length = 100)
+    private String isbn;
+
     public Book() {
         // Used by the framework
     }
 
-    public Book(String title, String author, int publicationYear, String genre, BigDecimal price, int copies) {
+    public Book(String title, String author, int publicationYear, String genre, BigDecimal price, int copies, String isbn) {
         this.title = title;
         this.author = author;
         this.publicationYear = publicationYear;
         this.genre = genre;
         this.price = price;
         this.copies = copies;
+        this.isbn = isbn;
     }
 
     public Integer getId() {
@@ -116,16 +120,30 @@ public class Book {
         this.loans = loans;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
-                ", publicationYear='" + publicationYear + '\'' +
+                ", publicationYear=" + publicationYear +
                 ", genre='" + genre + '\'' +
                 ", price=" + price +
                 ", copies=" + copies +
+                ", loans=" + loans +
+                ", isbn='" + isbn + '\'' +
                 '}';
     }
 }

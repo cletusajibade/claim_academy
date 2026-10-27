@@ -100,7 +100,7 @@ public class StartupRunner implements CommandLineRunner {
     private void createOperation() {
         //CRUD
         // Data Transfer Object (DTO) - this is just a plain data values carrier
-        Book addedBook = bookCatalog.addBook(new Book("In the beginning", "Jesus", 2000, "Religion", new BigDecimal("50.99"), 3));
+        Book addedBook = bookCatalog.addBook(new Book("In the beginning", "Jesus", 2000, "Religion", new BigDecimal("50.99"), 3, "123456789"));
         IO.println("Added book with id " + addedBook.getId());
 
 //        if (memberRepository.findByEmail(EMAIL).isPresent()) {
