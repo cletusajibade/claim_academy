@@ -1,0 +1,25 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+.shadow-padding {
+  padding: 20px;
+  background-color: white;
+  background-clip: content-box; /* Keeps the white background only in the center */
+  box-shadow: inset 0 0 0 20px tomato; /* Match the 20px padding size */
+
+  border: 10px solid green;
+}
+
+.shadow-margin {
+  outline: 20px solid purple; /* Simulates a 20px colored margin */
+  margin: 20px; /* Kept to prevent overlapping other elements */
+}
+
+.card {
+  width: 300px;
+  border: 1px solid red;
+  padding: 20px;
+  margin: 0 auto;
+}

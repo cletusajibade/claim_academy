@@ -1,0 +1,81 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #2e75b6;
+  --dark: #1f2937;
+  --light: #f5f7fa;
+  --card-bg: #ffffff;
+  --border: #d0d5dd;
+}
+
+body {
+  margin: 0; /* resetting this at the body level*/
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--dark);
+  background: var(--light);
+  line-height: 1.6;
+}
+
+/* Header and Navigaiton */
+header {
+  background: var(--dark);
+  color: var(--light);
+  padding: 1.5rem 1rem;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0 0 0.5rem;
+}
+
+nav a {
+  color: #ffffff;
+  text-decoration: none;
+  margin: 0 0.75rem;
+}
+
+nav a:hover {
+  color: #9cc9ee;
+}
+
+/* Main content */
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+section {
+  margin-bottom: 2.5rem;
+}
+
+h2 {
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 0.25rem;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Cards */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.card:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card h3 {
+  margin-top: 0;
+}
