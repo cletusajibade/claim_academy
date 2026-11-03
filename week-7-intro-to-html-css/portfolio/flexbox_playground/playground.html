@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexbox Playground</title>
+    <style>
+        .container {
+            display: flex;
+            height: 250px;
+            background: #e5e7eb;
+            gap: 10px;
+        }
+
+
+        .box {
+            width: 80px;
+            height: 80px;
+            background: #2e75b6;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>1. Center</h2>
+    <div class="container c1" style="justify-content: center; align-items: center;">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+    </div>
+    <h2>2. Right and top</h2>
+    <div class="container c2" style="justify-content: flex-end; align-items: flex-start;">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+    </div>
+    <h2>3. space-between</h2>
+    <div class="container c3" style="justify-content: space-between;">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+    </div>
+    <h2>4. Column</h2>
+    <div class="container c4" style="flex-direction: column;">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+    </div>
+    <h2>5. Column, centered</h2>
+    <div class="container c5" style="flex-direction: column; align-items: center;">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+    </div>
+    <h2>6. Bottom, evenly spaced</h2>
+    <div class="container c6" style="align-items: flex-end; justify-content: space-evenly;">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+    </div>
+</body>
+
+</html>
