@@ -66,17 +66,30 @@ img {
 /* Header: mobile first (stacked) */
 .site-header {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* 0 - 767px */
+  justify-content: flex-start;
   align-items: center;
   gap: 0.5rem;
-  /* background: var(--dark); */
+  background: var(--dark);
   color: #ffffff;
   padding: 1rem 1.5rem;
 }
 
 .site-header h1 {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 32px;
+}
+
+@media (min-width: 768px){ 
+  .site-header {
+    flex-direction: row;
+    justify-content: center;
+    
+  }
+
+  .site-header h1{
+    font-size: 40px;
+  }
 }
 
 .nav-links {
