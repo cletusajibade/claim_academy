@@ -1,15 +1,13 @@
-function Greeting() {
+export default function Greeting({ message, number }) {
   return (
     <div>
-      <h1>Welome to Ract</h1>
+      <h1>{message}</h1>
       <p>React is interesting</p>
       <ul>
-        <li>1</li>
+        <li>{number}</li>
         <li>2</li>
         <li>3</li>
       </ul>
     </div>
   );
 }
-
-export default Greeting;
