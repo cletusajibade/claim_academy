@@ -7,6 +7,8 @@ out/
 build/
 *.class
 
+node_modules/
+
 ### IntelliJ IDEA ###
 .idea/
 *.iws

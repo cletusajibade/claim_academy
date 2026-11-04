@@ -1,4 +1,5 @@
-import './css/style.css'
+import './css/style.css';
+
 export default function ProductCard({ name, price, image, onAdd }) {
   return (
     <article className="card">

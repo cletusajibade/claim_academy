@@ -1,7 +1,21 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #2e75b6;
+  --dark: #1f2937;
+  --light: #f5f7fa;
+  --card-bg: #ffffff;
+  --border: #d0d5dd;
+}
+
 .product-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 5px;
   justify-content: center;
   padding: 20px;
   font-family: sans-serif;
@@ -24,6 +38,6 @@
   margin-top: 0;
 }
 
-.card img{
-    width: 5rem;
+.card img {
+  width: 5rem;
 }
