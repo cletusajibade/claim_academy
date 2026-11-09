@@ -1,0 +1,441 @@
+/* global.css — styles for the whole app.
+   The product card styles come from react-demo/src/css/style.css. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ---------- Colour variables (light theme) ---------- */
+:root {
+  --primary: #2e75b6;
+  --primary-dark: #225a8c;
+  --dark: #1f2937;
+  --light: #f5f7fa;
+  --card-bg: #ffffff;
+  --border: #d0d5dd;
+  --text: #1f2937;
+  --muted: #667085;
+  --danger: #c0392b;
+  --success: #1e8e3e;
+  --warning: #b7791f;
+  color-scheme: light;
+}
+
+/* ---------- Dark theme (switched on by ThemeProvider, Lesson 8) ---------- */
+:root[data-theme='dark'] {
+  --light: #111827;
+  --card-bg: #1f2937;
+  --border: #374151;
+  --text: #f3f4f6;
+  --muted: #9ca3af;
+  --primary: #4b9be0;
+  --primary-dark: #2e75b6;
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: var(--light);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+code {
+  background: var(--border);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1.5rem 0;
+}
+
+/* ---------- App layout: sidebar + content ---------- */
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  padding: 1rem;
+  background: var(--card-bg);
+  border-right: 1px solid var(--border);
+}
+
+.sidebar ol {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin: 0 0 0.75rem;
+}
+
+.nav-link {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  color: var(--text);
+  border: none;
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+
+.nav-link:hover {
+  background: var(--light);
+}
+
+.nav-link.active {
+  background: var(--primary);
+  color: white;
+}
+
+.nav-number {
+  display: inline-block;
+  width: 1.6rem;
+  font-weight: 700;
+}
+
+.content {
+  flex: 1;
+  padding: 1.5rem 2rem;
+  max-width: 1000px;
+}
+
+.pager {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 760px) {
+  .app {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .content {
+    padding: 1rem;
+  }
+}
+
+/* ---------- Lesson page ---------- */
+.lesson-header h1 {
+  margin: 0;
+}
+
+.lesson-number {
+  margin: 0;
+  color: var(--primary);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.85rem;
+}
+
+.lesson-folder {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.panel {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+}
+
+.panel h2 {
+  margin-top: 0;
+  font-size: 1.1rem;
+}
+
+.demo {
+  border: 2px dashed var(--primary);
+}
+
+.try-it {
+  border-left: 5px solid var(--warning);
+}
+
+/* ---------- Buttons & inputs ---------- */
+button {
+  font: inherit;
+  cursor: pointer;
+  padding: 0.45rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid var(--primary);
+  background: var(--primary);
+  color: white;
+}
+
+button:hover:not(:disabled) {
+  background: var(--primary-dark);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+button.secondary {
+  background: transparent;
+  color: var(--primary);
+}
+
+button.secondary:hover:not(:disabled) {
+  background: var(--light);
+}
+
+button.small {
+  padding: 0.1rem 0.5rem;
+}
+
+button.link {
+  background: none;
+  border: none;
+  color: var(--danger);
+  padding: 0.2rem 0.4rem;
+}
+
+button.link:hover:not(:disabled) {
+  background: none;
+  text-decoration: underline;
+}
+
+input:not([type='checkbox']),
+select {
+  font: inherit;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text);
+}
+
+/* ---------- Small helpers ---------- */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.big-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.callout {
+  background: var(--light);
+  border-left: 4px solid var(--primary);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  margin: 0;
+}
+
+.callout.error {
+  border-left-color: var(--danger);
+}
+
+.nested {
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+/* ---------- Lesson 2: Badge ---------- */
+.badge {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: white;
+}
+.badge-info {
+  background: var(--primary);
+}
+.badge-success {
+  background: var(--success);
+}
+.badge-warning {
+  background: var(--warning);
+}
+
+/* ---------- Lesson 4 & 7: products (from react-demo) ---------- */
+.product-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  margin: 1rem;
+  text-align: center;
+}
+
+.card:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card h3 {
+  margin-top: 0.5rem;
+}
+
+.card img {
+  width: 5rem;
+  height: 5rem;
+  object-fit: contain;
+}
+
+/* ---------- Lesson 5: to-do list ---------- */
+.todo-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  max-width: 420px;
+}
+
+.todo-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.todo-list label {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.todo-list .done {
+  text-decoration: line-through;
+  color: var(--muted);
+}
+
+/* ---------- Lesson 7: shopping cart ---------- */
+.cart-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 1rem;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .cart-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cart {
+  background: var(--light);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.cart h3 {
+  margin-top: 0;
+}
+
+.cart-items {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+}
+
+.cart-items li {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.cart-items .row {
+  flex-wrap: nowrap;
+  gap: 0.35rem;
+}
+
+.cart-total {
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+
+/* ---------- Lesson 10: Card & Button ---------- */
+.card-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.box {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+  background: var(--light);
+}
+
+.box-title {
+  margin-top: 0;
+}
+
+.box-footer {
+  margin-top: 0.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.btn-primary {
+  /* uses the default button look */
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--primary);
+}
+
+.btn-danger {
+  background: var(--danger);
+  border-color: var(--danger);
+}
