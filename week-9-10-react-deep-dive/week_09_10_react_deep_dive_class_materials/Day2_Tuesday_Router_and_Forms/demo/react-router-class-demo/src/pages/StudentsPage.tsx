@@ -1,11 +1,15 @@
 // import type { Student } from '../data';
-import { INITIAL_STUDENTS } from '../data';
+import { type Student, INITIAL_STUDENTS } from '../data';
 import { Link } from 'react-router';
 
-function StudentPage() {
+interface StudentsPageProps{
+  students: Student[]
+}
+
+function StudentsPage({ students }: StudentsPageProps) {
   return (
     <div>
-      <h2>Students ({INITIAL_STUDENTS.length})</h2>
+      <h2>Students ({students.length})</h2>
       {INITIAL_STUDENTS.map((s) => (
         <div className="card" key={s.id}>
           <Link to={`/students/${s.id}`}>{s.name}</Link>
@@ -15,4 +19,4 @@ function StudentPage() {
   );
 }
 
-export default StudentPage;
+export default StudentsPage;
