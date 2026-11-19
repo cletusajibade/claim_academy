@@ -1,0 +1,36 @@
+:root {
+  --bg: #f6f7fb; --card: #ffffff; --text: #1d2433; --muted: #5b6475;
+  --primary: #0f4c9a; --primary-weak: #e6eefb; --danger: #c0392b; --ok: #1e8e3e;
+  --border: #dde2ec; --radius: 10px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--text); background: var(--bg);
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+a { color: var(--primary); }
+.container { max-width: 980px; margin: 0 auto; padding: 24px; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 16px; }
+.row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.stack { display: flex; flex-direction: column; gap: 10px; }
+.muted { color: var(--muted); font-size: 0.92rem; }
+.error { color: var(--danger); font-size: 0.9rem; }
+.success { color: var(--ok); }
+button { font: inherit; padding: 7px 14px; border-radius: 8px; border: 1px solid var(--primary); background: var(--primary); color: #fff; cursor: pointer; }
+button.secondary { background: #fff; color: var(--primary); }
+button.danger { background: var(--danger); border-color: var(--danger); }
+button:disabled { opacity: .5; cursor: not-allowed; }
+input, select, textarea { font: inherit; padding: 7px 10px; border: 1px solid var(--border); border-radius: 8px; background: #fff; }
+label { font-weight: 600; font-size: .92rem; }
+.field { display: flex; flex-direction: column; gap: 4px; }
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+.tabs button { background: #fff; color: var(--primary); }
+.tabs button.active { background: var(--primary); color: #fff; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 999px; background: var(--primary-weak); color: var(--primary); font-size: .8rem; font-weight: 600; }
+code { background: #eef1f6; padding: 1px 5px; border-radius: 4px; }
+table { border-collapse: collapse; width: 100%; }
+th, td { text-align: left; padding: 8px; border-bottom: 1px solid var(--border); }
+nav.topnav { background: var(--primary); }
+nav.topnav .container { display: flex; gap: 16px; align-items: center; padding-top: 12px; padding-bottom: 12px; }
+nav.topnav a { color: #dfe9ff; text-decoration: none; font-weight: 600; }
+nav.topnav a.active { color: #fff; border-bottom: 2px solid #f5b942; }
+nav.topnav .spacer { flex: 1; }

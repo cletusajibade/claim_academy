@@ -1,0 +1,17 @@
+POST http://localhost:8080/tasks
+Content-Type: application/json
+
+{
+  "title": "Visit the mall",
+  "description": "For school event",
+  "complete": false,
+  "dueDate": "2026-11-27"
+}
+
+###
+GET http://localhost:8080/tasks
+Accept: application/json
+
+###
+
+

@@ -1,0 +1,15 @@
+/* Styling is provided — not part of the lesson. */
+body { margin: 0; font-family: system-ui, sans-serif; background: #f6f7fb; color: #1d2433; }
+main { max-width: 640px; margin: 0 auto; padding: 24px; }
+header { display: flex; justify-content: space-between; align-items: center; background: #0f4c9a; color: #fff; padding: 12px 24px; }
+.badge { background: #f5b942; color: #1d2433; border-radius: 999px; padding: 2px 10px; font-weight: 700; }
+.card { background: #fff; border: 1px solid #dde2ec; border-radius: 10px; padding: 10px 14px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.done { text-decoration: line-through; color: #8a93a5; }
+.error { color: #c0392b; }
+form { display: flex; gap: 8px; margin-bottom: 16px; }
+.stack { flex-direction: column; max-width: 320px; }
+input, button { font: inherit; padding: 8px 10px; border-radius: 8px; border: 1px solid #c9d1df; }
+button { background: #0f4c9a; color: #fff; border: none; cursor: pointer; }
+button.link { background: transparent; color: #c0392b; padding: 4px 8px; }
+header button { background: #fff; color: #0f4c9a; }
+code { background: #eef1f6; padding: 2px 6px; border-radius: 4px; word-break: break-all; }
