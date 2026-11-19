@@ -1,26 +1,11 @@
-body {
+* Styling is provided — not part of the lesson. */ body {
   margin: 0;
   font-family: system-ui, sans-serif;
   background: #f6f7fb;
   color: #1d2433;
 }
-nav {
-  display: flex;
-  gap: 20px;
-  padding: 14px 24px;
-  background: #0f4c9a;
-}
-nav a {
-  color: #dfe9ff;
-  text-decoration: none;
-  font-weight: 600;
-}
-nav a.active {
-  color: #fff;
-  border-bottom: 2px solid #f5b942;
-}
 main {
-  max-width: 720px;
+  max-width: 640px;
   margin: 0 auto;
   padding: 24px;
 }
@@ -28,17 +13,22 @@ main {
   background: #fff;
   border: 1px solid #dde2ec;
   border-radius: 10px;
-  padding: 14px 18px;
-  margin-bottom: 12px;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+}
+.done {
+  text-decoration: line-through;
+  color: #8a93a5;
+}
+.error {
+  color: #c0392b;
 }
 form {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
-  max-width: 360px;
+  gap: 8px;
+  margin-bottom: 16px;
 }
 input,
-select,
 button {
   font: inherit;
   padding: 8px 10px;
@@ -51,7 +41,7 @@ button {
   border: none;
   cursor: pointer;
 }
-.error {
-  color: #c0392b;
-  margin: 0;
+
+.disabled {
+  background: #e6e6e7;
 }

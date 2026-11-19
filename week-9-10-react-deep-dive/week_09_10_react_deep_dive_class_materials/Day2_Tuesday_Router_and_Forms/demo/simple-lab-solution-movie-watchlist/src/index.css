@@ -1,0 +1,11 @@
+/* Styling is provided — students don't need to type this file. */
+body { margin: 0; font-family: system-ui, sans-serif; background: #f6f7fb; color: #1d2433; }
+nav { display: flex; gap: 20px; padding: 14px 24px; background: #0f4c9a; }
+nav a { color: #dfe9ff; text-decoration: none; font-weight: 600; }
+nav a.active { color: #fff; border-bottom: 2px solid #f5b942; }
+main { max-width: 720px; margin: 0 auto; padding: 24px; }
+.card { background: #fff; border: 1px solid #dde2ec; border-radius: 10px; padding: 14px 18px; margin-bottom: 12px; }
+form { display: flex; flex-direction: column; gap: 12px; max-width: 360px; }
+input, select, button { font: inherit; padding: 8px 10px; border-radius: 8px; border: 1px solid #c9d1df; }
+button { background: #0f4c9a; color: #fff; border: none; cursor: pointer; }
+.error { color: #c0392b; margin: 0; }
