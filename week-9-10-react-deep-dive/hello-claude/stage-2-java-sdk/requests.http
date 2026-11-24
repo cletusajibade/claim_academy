@@ -1,0 +1,22 @@
+### Ask Claude a question (IntelliJ: click the green ▶ next to the request)
+POST http://localhost:8080/api/ai/ask
+Content-Type: application/json
+
+{
+  "question": "What is the difference between a JDK and a JRE?"
+}
+
+### Validation error: blank question → 400
+POST http://localhost:8080/api/ai/ask
+Content-Type: application/json
+
+{
+  "question": ""
+}
+
+### The same call straight to Anthropic with curl (this is what the SDK sends for you):
+# curl https://api.anthropic.com/v1/messages \
+#   -H "Authorization: Bearer $ANTHROPIC_API_KEY" \
+#   -H "anthropic-version: 2026-10-21" \
+#   -H "content-type: application/json" \
+#   -d '{"model":"claude-haiku-5-5","max_tokens":1024,"system":"Answer in one sentence.","messages":[{"role":"user","content":"What is a JVM?"}]}'
