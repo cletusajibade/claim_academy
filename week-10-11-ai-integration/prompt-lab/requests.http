@@ -1,0 +1,49 @@
+### Run these from IntelliJ (or VS Code REST Client). The app must be running with ANTHROPIC_API_KEY set.
+
+### 0. Zero-shot, no system prompt: notice how long and generic the answer is
+POST http://localhost:8080/api/prompts/zero-shot
+Content-Type: application/json
+
+{"input": "Review this Java: for (int i = 0; i <= list.size(); i++) { System.out.println(list.get(i)); }"}
+
+### 1. SAME code, with a system prompt (role + rules + format)
+POST http://localhost:8080/api/prompts/review
+Content-Type: application/json
+
+{"input": "for (int i = 0; i <= list.size(); i++) { System.out.println(list.get(i)); }"}
+
+### 2. Few-shot: three examples teach the format
+POST http://localhost:8080/api/prompts/commit-message
+Content-Type: application/json
+
+{"input": "I made the login page show an error when the password is wrong"}
+
+### 3. Chain of thought: plan first, then code; the API returns the code part separately
+POST http://localhost:8080/api/prompts/generate-method
+Content-Type: application/json
+
+{"input": "A method that returns true if a String is a palindrome, ignoring case, spaces and punctuation."}
+
+### 4. Structured output: JSON we can validate and use
+POST http://localhost:8080/api/prompts/extract-task
+Content-Type: application/json
+
+{"input": "I need to submit the AI design document by next Friday, it's urgent"}
+
+### 4b. Try to break it: no date given → dueDate must be null (not invented)
+POST http://localhost:8080/api/prompts/extract-task
+Content-Type: application/json
+
+{"input": "water the plants"}
+
+### 5. Pair programming lab: weak prompt v1, improve it in Prompts.java and re-run
+POST http://localhost:8080/api/prompts/interview-questions
+Content-Type: application/json
+
+{"input": "junior Java"}
+
+### Validation: blank input → 400, no call to Claude
+POST http://localhost:8080/api/prompts/review
+Content-Type: application/json
+
+{"input": "   "}
